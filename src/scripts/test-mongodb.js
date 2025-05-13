@@ -1,6 +1,7 @@
 // This is a standalone script to test MongoDB connection
 // Run with: node -r dotenv/config src/scripts/test-mongodb.js
 
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const mongoose = require('mongoose');
 
 async function testConnection() {

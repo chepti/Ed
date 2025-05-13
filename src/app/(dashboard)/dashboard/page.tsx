@@ -27,7 +27,7 @@ export default async function DashboardPage() {
 
       <div className="mb-8">
         <h1 className="text-3xl font-bold mb-2 glass-headline">ברוך הבא, {user.firstName || 'משתמש'}!</h1>
-        <p className="text-gray-500 dark:text-gray-400">מרחב העבודה האישי שלך ב"חולמים תקשוב"</p>
+        <p className="text-gray-500 dark:text-gray-400">מרחב העבודה האישי שלך ב&quot;חולמים תקשוב&quot;</p>
       </div>
       
       {/* Welcome Alert */}
@@ -52,7 +52,7 @@ export default async function DashboardPage() {
               <li>חיפוש וסינון כלי AI</li>
               <li>צפייה בתיאור, יתרונות וחסרונות</li>
               <li>הוספת דירוגים, הדרכות ודוגמאות</li>
-              <li>יצירת "מדפים" אישיים של כלים</li>
+              <li>יצירת &quot;מדפים&quot; אישיים של כלים</li>
               <li>קהילה שיתופית של מורים</li>
               <li>עיצוב נגיש ומותאם למובייל</li>
               <li>אימות משתמשים מאובטח</li>
