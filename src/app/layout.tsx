@@ -8,11 +8,11 @@ import { AccessibilityControls } from "@/components/layout/AccessibilityControls
 import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
-  title: "Next.js Boilerplate by YUV.AI",
-  description: "A modern Next.js boilerplate with MongoDB, Clerk, Tailwind CSS, and shadcn/ui",
-  authors: [{ name: "Yuval Avidani", url: "https://linktr.ee/yuvai" }],
-  keywords: ["Next.js", "React", "Tailwind CSS", "MongoDB", "Clerk", "YUV.AI"],
-  creator: "YUV.AI",
+  title: "חולמים תקשוב | מאגר כלי AI למורים",
+  description: "פלטפורמה לגילוי, סקירה וארגון כלי בינה מלאכותית לשימוש בחינוך ובהוראה.",
+  authors: [{ name: "חולמים תקשוב" }],
+  keywords: ["AI", "בינה מלאכותית", "חינוך", "הוראה", "כלים דיגיטליים", "חדשנות פדגוגית", "חולמים תקשוב"],
+  creator: "חולמים תקשוב",
 };
 
 export default function RootLayout({
@@ -34,53 +34,18 @@ export default function RootLayout({
             <main className="min-h-[calc(100vh-4rem)] container mx-auto px-4">
               {children}
             </main>
-            <footer className="py-6 text-center text-sm text-gray-500 dark:text-gray-400">
-              <div className="flex flex-col items-center justify-center space-y-4">
-                <div className="flex items-center space-x-2">
-                  <a 
-                    href="https://linktr.ee/yuvai" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="block h-16 w-16 overflow-hidden rounded-full border-2 border-purple-500"
-                  >
-                    <Image 
-                      src="/images/yuval-profile.jpg" 
-                      alt="Yuval Avidani" 
-                      width={64}
-                      height={64}
-                      className="h-full w-full object-cover"
-                    />
-                  </a>
-                  <div>
-                    <p>
-                      Built by{' '}
-                      <a 
-                        href="https://linktr.ee/yuvai" 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="underline hover:text-purple-600 transition-colors"
-                      >
-                        Yuval Avidani
-                      </a> 
-                      {' '}- AI Builder & Speaker
-                    </p>
-                    <p className="mt-1">Fly High With YUV.AI</p>
-                  </div>
-                </div>
-                <a 
-                  href="https://yuv.ai" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="block w-24"
-                >
-                  <Image 
-                    src="/images/phoenix-logo.png" 
-                    alt="YUV.AI Phoenix Logo" 
-                    width={96}
-                    height={96}
-                    className="w-full"
-                  />
-                </a>
+            <footer className="py-8 text-center text-sm text-gray-500 dark:text-gray-400 border-t">
+              <div className="flex flex-col items-center justify-center space-y-3">
+                <Image
+                  src="/logo.png"
+                  alt="חולמים תקשוב לוגו"
+                  width={100}
+                  height={100}
+                  className="rounded-md"
+                />
+                <p className="font-semibold">חולמים תקשוב</p>
+                <p>יוצרים כלים מעוררי השראה לקהילת החינוך.</p>
+                <p>&copy; {new Date().getFullYear()} כל הזכויות שמורות.</p>
               </div>
             </footer>
             <AccessibilityControls />

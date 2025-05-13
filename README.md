@@ -1,32 +1,28 @@
-# YUV.AI Next.js Boilerplate
+# מאגר כלי AI למורים - חולמים תקשוב
 
-A modern Next.js boilerplate with Clerk authentication, Tailwind CSS, and shadcn/ui components.
+פלטפורמה מבוססת Next.js לגילוי, סקירה וארגון כלי בינה מלאכותית לשימוש בחינוך ובהוראה. מפותח על ידי "חולמים תקשוב".
 
-![Boilerplate Homepage - Light](https://i.imgur.com/CnwTENH.png)
+## תכונות עיקריות
 
-![Boilerplate Homepage - Dark](https://i.imgur.com/KoLCKZQ.png)
+- חיפוש וסינון כלי AI לפי מגוון קטגוריות.
+- צפייה בתיאור מפורט, דירוגים, יתרונות, חסרונות ומגבלות לכל כלי.
+- הוספת סקירות, דירוגים, דוגמאות והדרכות על ידי מורים.
+- יצירת "מדפים" אישיים - אוספי כלים מאורגנים.
+- גילוי כלים חדשים דרך הקשרים ומדפים של אחרים.
+- ממשק משתמש נגיש ומותאם למובייל.
+- אימות משתמשים מאובטח עם Clerk.
+- בנוי על Next.js 14+ עם App Router.
+- עיצוב עם Tailwind CSS ורכיבי shadcn/ui.
 
-![Boilerplate Dashboard - Light](https://i.imgur.com/W3p472n.png)
+## איך להתחיל?
 
-## Features
+1. שכפלו את המאגר (repository).
+2. העתיקו את הקובץ `.env.example` לקובץ חדש בשם `.env.local` ומלאו את הערכים הדרושים (מפתחות Clerk, חיבור ל-MongoDB וכו').
+3. התקינו את התלויות באמצעות `npm install`.
+4. הריצו את שרת הפיתוח באמצעות `npm run dev`.
 
-- Next.js 14+ with App Router
-- Authentication with Clerk
-- UI Components with shadcn/ui
-- Styling with Tailwind CSS
-- Dark/Light mode toggle
-- Mobile-first responsive design
-- Accessible UI components
+## פותח על ידי
 
-## Getting Started
-
-1. Clone this repository
-2. Copy `.env.example` to `.env.local` and fill in your own values
-3. Install dependencies with `npm install`
-4. Run the development server with `npm run dev`
-
-## Created By
-
-Yuval Avidani, AI Builder & Speaker
+צוות חולמים תקשוב
 
 "Fly High With YUV.AI"

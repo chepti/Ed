@@ -1,7 +1,9 @@
 {
-  "name": "boiler-plate",
+  "name": "holmim-tikshuv-ai-tools",
   "version": "0.1.0",
   "private": true,
+  "description": "פלטפורמה לגילוי, סקירה וארגון כלי בינה מלאכותית לשימוש בחינוך ובהוראה.",
+  "author": "חולמים תקשוב",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -10,7 +12,7 @@
     "format": "prettier --write .",
     "analyze": "cross-env ANALYZE=true next build",
     "type-check": "tsc --noEmit",
-    "postinstall": "echo 'Installed by Yuval Avidani - Fly High With YUV.AI'"
+    "postinstall": "echo 'Project initialized for חולמים תקשוב'"
   },
   "dependencies": {
     "@clerk/nextjs": "^6.18.5",
