@@ -19,7 +19,7 @@
 │   ├── scripts/
 │   ├── utils/
 │   └── middleware.ts
-├── yuv-ai-nextjs-boilerplate-master/  <-- האם זה הפרויקט הפעיל או עותק ישן?
+├── 
 ├── .gitignore
 ├── components.json
 ├── eslint.config.mjs
