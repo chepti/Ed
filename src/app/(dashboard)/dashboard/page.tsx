@@ -2,7 +2,7 @@ import { currentUser } from '@clerk/nextjs/server';
 import { redirect } from 'next/navigation';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { ChevronsUp, Mail, Github, MessagesSquare, ShieldCheck, Sparkles } from 'lucide-react';
+import { ChevronsUp, Mail, Search, BookOpen, Star, Brain, Users, Sparkles } from 'lucide-react';
 
 export default async function DashboardPage() {
   const user = await currentUser();
@@ -43,19 +43,17 @@ export default async function DashboardPage() {
         <Card className="transform transition-all duration-300 hover:shadow-lg animate-slideInUp glass-shimmer" style={{ animationDelay: '0.1s' }}>
           <CardHeader className="pb-2">
             <CardTitle className="flex items-center gap-2">
-              <Sparkles className="h-5 w-5 text-purple-600" /> <span className="glass-headline">תכונות עיקריות</span>
+              <Search className="h-5 w-5 text-purple-600" /> <span className="glass-headline">חיפוש וגילוי כלים</span>
             </CardTitle>
-            <CardDescription>מה תמצאו בפלטפורמה</CardDescription>
+            <CardDescription>איתור כלי AI מתאימים לצרכים שלכם</CardDescription>
           </CardHeader>
           <CardContent>
             <ul className="list-disc pl-5 space-y-1 text-sm">
-              <li>חיפוש וסינון כלי AI</li>
-              <li>צפייה בתיאור, יתרונות וחסרונות</li>
-              <li>הוספת דירוגים, הדרכות ודוגמאות</li>
-              <li>יצירת &quot;מדפים&quot; אישיים של כלים</li>
-              <li>קהילה שיתופית של מורים</li>
-              <li>עיצוב נגיש ומותאם למובייל</li>
-              <li>אימות משתמשים מאובטח</li>
+              <li>חיפוש לפי נושא, רמת קושי וחינמיות</li>
+              <li>סינון לפי הקשר פדגוגי (הקניה, תרגול, הערכה)</li>
+              <li>מציאת כלים התומכים בעברית</li>
+              <li>חיפוש לפי סוג התוצר הרצוי</li>
+              <li>גילוי כלים מומלצים לפי דירוגים</li>
             </ul>
           </CardContent>
         </Card>
@@ -63,19 +61,18 @@ export default async function DashboardPage() {
         <Card className="transform transition-all duration-300 hover:shadow-lg animate-slideInUp glass-shimmer" style={{ animationDelay: '0.2s' }}>
           <CardHeader className="pb-2">
             <CardTitle className="flex items-center gap-2">
-              <ShieldCheck className="h-5 w-5 text-purple-600" /> <span className="glass-headline">Security</span>
+              <BookOpen className="h-5 w-5 text-purple-600" /> <span className="glass-headline">הדרכות ודוגמאות</span>
             </CardTitle>
-            <CardDescription>Built-in security features</CardDescription>
+            <CardDescription>מאגר עשיר של תוכן לימודי</CardDescription>
           </CardHeader>
           <CardContent>
             <ul className="list-disc pl-5 space-y-1 text-sm">
-              <li>CSRF Protection</li>
-              <li>XSS Prevention</li>
-              <li>Secure HTTP Headers</li>
-              <li>Rate Limiting</li>
-              <li>Input Validation</li>
-              <li>Secure Authentication</li>
-              <li>Content Security Policy</li>
+              <li>הדרכות מפורטות לכל כלי</li>
+              <li>דוגמאות מעשיות ופרומפטים</li>
+              <li>וידאו הדרכות וטקסטים</li>
+              <li>רמות קושי שונות למתחילים ומתקדמים</li>
+              <li>הוספת הדרכות ודוגמאות משלכם</li>
+              <li>דירוג התוכן הלימודי</li>
             </ul>
           </CardContent>
         </Card>
@@ -83,79 +80,82 @@ export default async function DashboardPage() {
         <Card className="transform transition-all duration-300 hover:shadow-lg animate-slideInUp glass-shimmer" style={{ animationDelay: '0.3s' }}>
           <CardHeader className="pb-2">
             <CardTitle className="flex items-center gap-2">
-              <MessagesSquare className="h-5 w-5 text-purple-600" /> <span className="glass-headline">Getting Started</span>
+              <Star className="h-5 w-5 text-purple-600" /> <span className="glass-headline">דירוגים וביקורות</span>
             </CardTitle>
-            <CardDescription>Next steps for your project</CardDescription>
+            <CardDescription>שיתוף חוויות וחוות דעת</CardDescription>
           </CardHeader>
           <CardContent>
             <ul className="list-disc pl-5 space-y-1 text-sm">
-              <li>Customize this boilerplate</li>
-              <li>Create new pages and components</li>
-              <li>Set up your MongoDB database</li>
-              <li>Configure Clerk webhooks</li>
-              <li>Add custom data models</li>
-              <li>Implement business logic</li>
-              <li>Deploy to production</li>
+              <li>דירוג כלים על בסיס הניסיון שלכם</li>
+              <li>צפייה ביתרונות וחסרונות של כל כלי</li>
+              <li>הבנת מגבלות הכלים השונים</li>
+              <li>קריאת ביקורות ממורים אחרים</li>
+              <li>הוספת חוות דעת אישיות</li>
+              <li>דירוג הדרכות ודוגמאות</li>
             </ul>
           </CardContent>
         </Card>
-      </div>
-      
-      {/* Resources */}
-      <h2 className="text-2xl font-bold mb-4 glass-headline">Helpful Resources</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        
         <Card className="transform transition-all duration-300 hover:shadow-lg animate-slideInUp glass-shimmer" style={{ animationDelay: '0.4s' }}>
           <CardHeader className="pb-2">
             <CardTitle className="flex items-center gap-2">
-              <Github className="h-5 w-5" /> <span className="glass-headline">GitHub Resources</span>
+              <Brain className="h-5 w-5 text-purple-600" /> <span className="glass-headline">מדפים אישיים</span>
             </CardTitle>
+            <CardDescription>ארגון כלים לפי העדפות אישיות</CardDescription>
           </CardHeader>
           <CardContent>
-            <ul className="space-y-2">
-              <li>
-                <a 
-                  href="https://github.com/shadcn/ui" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-blue-500 hover:underline flex items-center gap-1"
-                >
-                  shadcn/ui Components 
-                  <svg className="h-3 w-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                  </svg>
-                </a>
-              </li>
-              <li>
-                <a 
-                  href="https://github.com/tailwindlabs/tailwindcss" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-blue-500 hover:underline flex items-center gap-1"
-                >
-                  Tailwind CSS 
-                  <svg className="h-3 w-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                  </svg>
-                </a>
-              </li>
-              <li>
-                <a 
-                  href="https://github.com/vercel/next.js" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-blue-500 hover:underline flex items-center gap-1"
-                >
-                  Next.js 
-                  <svg className="h-3 w-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                  </svg>
-                </a>
-              </li>
+            <ul className="list-disc pl-5 space-y-1 text-sm">
+              <li>יצירת מדפים נושאיים (חינוך מיוחד, העשרה וכו')</li>
+              <li>קיבוץ כלים לפי שימושים אישיים</li>
+              <li>שיתוף מדפים עם מורים אחרים</li>
+              <li>גילוי קשרים בין כלים שונים</li>
+              <li>מציאת כלים חדשים דרך מדפים של אחרים</li>
             </ul>
           </CardContent>
         </Card>
         
         <Card className="transform transition-all duration-300 hover:shadow-lg animate-slideInUp glass-shimmer" style={{ animationDelay: '0.5s' }}>
+          <CardHeader className="pb-2">
+            <CardTitle className="flex items-center gap-2">
+              <Users className="h-5 w-5 text-purple-600" /> <span className="glass-headline">קהילת מורים</span>
+            </CardTitle>
+            <CardDescription>שיתוף פעולה ולמידה הדדית</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <ul className="list-disc pl-5 space-y-1 text-sm">
+              <li>שיתוף ניסיון עם מורים אחרים</li>
+              <li>הוספת תוכן חדש למאגר</li>
+              <li>למידה מהניסיון של קולגות</li>
+              <li>בניית רשת מקצועית</li>
+              <li>עזרה הדדית ותמיכה</li>
+              <li>קבלת עדכונים על כלים חדשים</li>
+            </ul>
+          </CardContent>
+        </Card>
+      </div>
+      
+      {/* Next Steps */}
+      <h2 className="text-2xl font-bold mb-4 glass-headline">השלבים הבאים</h2>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        <Card className="transform transition-all duration-300 hover:shadow-lg animate-slideInUp glass-shimmer" style={{ animationDelay: '0.6s' }}>
+          <CardHeader className="pb-2">
+            <CardTitle className="flex items-center gap-2">
+              <Sparkles className="h-5 w-5" /> <span className="glass-headline">התחלת השימוש</span>
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <ul className="space-y-2">
+              <li>🔍 חפשו כלי AI הראשון שלכם</li>
+              <li>📚 צפו בהדרכות ובדוגמאות</li>
+              <li>⭐ דרגו את הכלים שניסיתם</li>
+              <li>📝 הוסיפו דוגמאות משלכם</li>
+              <li>📂 צרו את המדף הראשון שלכם</li>
+              <li>🤝 התחברו עם מורים אחרים</li>
+            </ul>
+          </CardContent>
+        </Card>
+        
+        <Card className="transform transition-all duration-300 hover:shadow-lg animate-slideInUp glass-shimmer" style={{ animationDelay: '0.7s' }}>
           <CardHeader className="pb-2">
             <CardTitle className="flex items-center gap-2">
               <Mail className="h-5 w-5" /> <span className="glass-headline">יצירת קשר</span>
@@ -164,11 +164,11 @@ export default async function DashboardPage() {
           <CardContent>
             <p className="mb-4">יש לכם שאלות, הצעות או רוצים לשתף פעולה?</p>
             <p className="glass-headline font-semibold">
-              צוות חולמים תקשוב
+              חפציה בן ארצי - חולמים תקשוב
             </p>
             <p className="mt-2">
-              <a href="mailto:info@holmimtikshuv.example.com" className="text-blue-500 hover:underline">
-                info@holmimtikshuv.example.com
+              <a href="mailto:chepti@gmail.com" className="text-blue-500 hover:underline">
+                chepti@gmail.com
               </a>
             </p>
           </CardContent>
