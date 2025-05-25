@@ -121,6 +121,101 @@
     font-family: "Outfit", sans-serif;
     position: relative;
     overflow-x: hidden;
+    direction: rtl;
+  }
+  
+  /* RTL Support */
+  html {
+    direction: rtl;
+  }
+  
+  /* Fix for English text within RTL context */
+  [lang="en"], .ltr {
+    direction: ltr;
+    text-align: left;
+  }
+  
+  /* RTL-specific adjustments */
+  .rtl-flip {
+    transform: scaleX(-1);
+  }
+  
+  /* Icon adjustments for RTL */
+  .lucide {
+    margin-left: 0.5rem;
+    margin-right: 0;
+  }
+  
+  .lucide.mr-2 {
+    margin-right: 0;
+    margin-left: 0.5rem;
+  }
+  
+  .lucide.ml-2 {
+    margin-left: 0;
+    margin-right: 0.5rem;
+  }
+  
+  /* Button icon spacing for RTL */
+  button .lucide {
+    margin-left: 0.5rem;
+    margin-right: 0;
+  }
+  
+  /* Form elements RTL */
+  input, textarea, select {
+    text-align: right;
+  }
+  
+  input[type="url"], input[type="email"] {
+    text-align: left;
+    direction: ltr;
+  }
+  
+  /* Flex adjustments for RTL */
+  .flex-row-reverse {
+    flex-direction: row-reverse;
+  }
+  
+  /* Text alignment for RTL */
+  .text-right {
+    text-align: right;
+  }
+  
+  .text-left {
+    text-align: left;
+  }
+  
+  /* Padding and margin adjustments */
+  .pr-3 {
+    padding-right: 0.75rem;
+    padding-left: 0;
+  }
+  
+  .pl-3 {
+    padding-left: 0.75rem;
+    padding-right: 0;
+  }
+  
+  /* Search input icon positioning */
+  .relative input {
+    padding-right: 2.5rem;
+    padding-left: 0.75rem;
+  }
+  
+  .absolute.left-3 {
+    left: auto;
+    right: 0.75rem;
+  }
+  
+  /* Card and component spacing */
+  .space-x-2 > * + * {
+    margin-left: 0;
+    margin-right: 0.5rem;
+  }
+  
+  .gap-2 {
+    gap: 0.5rem;
   }
 }
 

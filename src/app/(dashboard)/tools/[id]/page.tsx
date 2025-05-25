@@ -137,8 +137,8 @@ export default function ToolDetailPage() {
         <div className="flex items-center gap-4 mb-4">
           <Button variant="outline" asChild>
             <Link href="/tools">
-              <ArrowLeft className="h-4 w-4 mr-2" />
               חזרה לכלים
+              <ArrowLeft className="h-4 w-4 mr-2" />
             </Link>
           </Button>
         </div>
@@ -177,8 +177,8 @@ export default function ToolDetailPage() {
             {tool.link && (
               <Button asChild>
                 <a href={tool.link} target="_blank" rel="noopener noreferrer">
-                  <ExternalLink className="h-4 w-4 mr-2" />
                   פתח כלי
+                  <ExternalLink className="h-4 w-4 mr-2" />
                 </a>
               </Button>
             )}
@@ -364,8 +364,8 @@ export default function ToolDetailPage() {
           <div className="flex justify-between items-center">
             <h2 className="text-2xl font-bold">הדרכות</h2>
             <Button>
-              <Plus className="h-4 w-4 mr-2" />
               הוסף הדרכה
+              <Plus className="h-4 w-4 mr-2" />
             </Button>
           </div>
           
@@ -407,8 +407,8 @@ export default function ToolDetailPage() {
           <div className="flex justify-between items-center">
             <h2 className="text-2xl font-bold">דוגמאות</h2>
             <Button>
-              <Plus className="h-4 w-4 mr-2" />
               הוסף דוגמה
+              <Plus className="h-4 w-4 mr-2" />
             </Button>
           </div>
           

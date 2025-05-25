@@ -118,8 +118,8 @@ export default function NewToolPage() {
         <div className="flex items-center gap-4 mb-4">
           <Button variant="outline" asChild>
             <Link href="/tools">
-              <ArrowLeft className="h-4 w-4 mr-2" />
               חזרה לכלים
+              <ArrowLeft className="h-4 w-4 mr-2" />
             </Link>
           </Button>
         </div>
@@ -354,8 +354,8 @@ export default function NewToolPage() {
           {/* Submit */}
           <div className="flex gap-4">
             <Button type="submit" disabled={isSubmitting} className="flex-1">
-              <Save className="h-4 w-4 mr-2" />
               {isSubmitting ? 'שומר...' : 'שמור כלי'}
+              <Save className="h-4 w-4 mr-2" />
             </Button>
             <Button type="button" variant="outline" asChild>
               <Link href="/tools">ביטול</Link>

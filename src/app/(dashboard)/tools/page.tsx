@@ -43,7 +43,6 @@ interface Tool {
 }
 
 export default function ToolsPage() {
-  const [tools, setTools] = useState<Tool[]>([]);
   const [filteredTools, setFilteredTools] = useState<Tool[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
@@ -71,7 +70,6 @@ export default function ToolsPage() {
         }
         
         const data = await response.json();
-        setTools(data);
         setFilteredTools(data);
       } catch (error) {
         console.error('Error fetching tools:', error);
@@ -115,8 +113,8 @@ export default function ToolsPage() {
         </div>
         <Button asChild>
           <Link href="/tools/new">
-            <Plus className="h-4 w-4 mr-2" />
             הוסף כלי חדש
+            <Plus className="h-4 w-4 mr-2" />
           </Link>
         </Button>
       </div>
@@ -125,12 +123,12 @@ export default function ToolsPage() {
       <div className="mb-8 space-y-4">
         {/* Search Bar */}
         <div className="relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+          <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
           <Input
             placeholder="חפשו כלים לפי שם, תיאור או תגיות..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-10"
+            className="pr-10"
           />
         </div>
 

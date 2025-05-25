@@ -1,8 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { currentUser } from '@clerk/nextjs/server';
-import { redirect } from 'next/navigation';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
@@ -27,7 +25,7 @@ export default function DashboardPage() {
       } else {
         setSeedResult(`שגיאה: ${data.error}`);
       }
-    } catch (error) {
+    } catch {
       setSeedResult('שגיאה בחיבור לשרת');
     } finally {
       setIsSeeding(false);
