@@ -150,7 +150,7 @@ export default function NewToolPage() {
               </div>
               
               <div>
-                <Label htmlFor="logo">לוגו/אמוג'י</Label>
+                <Label htmlFor="logo">לוגו/אמוג&apos;י</Label>
                 <Input
                   id="logo"
                   value={formData.logo}

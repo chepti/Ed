@@ -105,7 +105,7 @@ export default async function DashboardPage() {
           </CardHeader>
           <CardContent>
             <ul className="list-disc pl-5 space-y-1 text-sm">
-              <li>יצירת מדפים נושאיים (חינוך מיוחד, העשרה וכו')</li>
+              <li>יצירת מדפים נושאיים (חינוך מיוחד, העשרה וכו&apos;)</li>
               <li>קיבוץ כלים לפי שימושים אישיים</li>
               <li>שיתוף מדפים עם מורים אחרים</li>
               <li>גילוי קשרים בין כלים שונים</li>

@@ -1,7 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { useParams } from 'next/navigation';
+import { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -12,7 +11,6 @@ import {
   Star,
   Heart,
   BookOpen,
-  PlayCircle,
   Plus,
   Tag,
   Users,
@@ -85,11 +83,10 @@ const mockExamples = [
 ];
 
 export default function ToolDetailPage() {
-  const params = useParams();
   const [activeTab, setActiveTab] = useState('overview');
-  const [tool, setTool] = useState(mockTool);
-  const [tutorials, setTutorials] = useState(mockTutorials);
-  const [examples, setExamples] = useState(mockExamples);
+  const tool = mockTool;
+  const tutorials = mockTutorials;
+  const examples = mockExamples;
 
   return (
     <div className="py-6 max-w-6xl mx-auto">
