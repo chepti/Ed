@@ -49,7 +49,7 @@ export default function NewToolPage() {
 
   const [newTag, setNewTag] = useState('');
 
-  const handleInputChange = (field: string, value: any) => {
+  const handleInputChange = (field: string, value: string | boolean | string[]) => {
     setFormData(prev => ({
       ...prev,
       [field]: value
@@ -229,7 +229,7 @@ export default function NewToolPage() {
                     id="communicationFormat"
                     value={formData.communicationFormat}
                     onChange={(e) => handleInputChange('communicationFormat', e.target.value)}
-                    placeholder="צ'אט, טופס, API..."
+                    placeholder="צ&apos;אט, טופס, API..."
                   />
                 </div>
               </div>

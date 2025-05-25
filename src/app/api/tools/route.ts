@@ -16,7 +16,7 @@ export async function GET(request: NextRequest) {
     const freeOnly = searchParams.get('freeOnly') === 'true';
     
     // בניית query
-    const query: any = {};
+    const query: Record<string, unknown> = {};
     
     if (search) {
       query.$or = [

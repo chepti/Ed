@@ -18,8 +18,6 @@ import {
   Filter, 
   Star, 
   ExternalLink, 
-  BookOpen, 
-  PlayCircle,
   Tag,
   Heart 
 } from 'lucide-react';
@@ -84,13 +82,13 @@ export default function ToolsPage() {
 
   // Filter tools based on search and filters
   useEffect(() => {
-    let filtered = mockTools.filter(tool => {
+    const filtered = mockTools.filter(tool => {
       const matchesSearch = tool.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
                           tool.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
                           tool.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()));
       
       const matchesDifficulty = !selectedDifficulty || tool.difficultyLevel === selectedDifficulty;
-      const matchesContext = !selectedContext || tool.pedagogicalContext.includes(selectedContext as any);
+      const matchesContext = !selectedContext || tool.pedagogicalContext.includes(selectedContext as 'הקניה' | 'תרגול' | 'הערכה');
       const matchesHebrew = !hebrewOnly || tool.hebrewSupport;
       const matchesFree = !freeOnly || tool.isFree;
 
