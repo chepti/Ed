@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useParams } from 'next/navigation';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -14,79 +15,120 @@ import {
   Plus,
   Tag,
   Users,
-  Calendar
+  Calendar,
+  Loader2
 } from 'lucide-react';
 import Link from 'next/link';
 
-// Mock data - בהמשך נחליף לנתונים אמיתיים
-const mockTool = {
-  _id: '1',
-  name: 'ChatGPT',
-  link: 'https://chat.openai.com',
-  logo: '🤖',
-  description: 'מודל שפה מתקדם לכתיבה, תכנון שיעורים ויצירת תוכן חינוכי. הכלי מאפשר למורים ליצור חומרי לימוד, לתכנן שיעורים, לכתוב שאלות בחינות ועוד.',
-  limitations: 'מוגבל לנתונים עד אפריל 2023, לא תמיד מדויק במידע עובדתי, דורש בדיקה של התוכן שנוצר',
-  advantages: 'קל לשימוש, תוצאות איכותיות, חסכון בזמן, יכולת התאמה לסגנון כתיבה שונה',
-  disadvantages: 'דורש מנוי בגרסה המתקדמת, לא תמיד מבין הקשר ישראלי, יכול ליצור תוכן לא מדויק',
-  toolRating: 4.5,
-  usageInTeaching: 'יצירת תכניות שיעור, כתיבת שאלות לבחינות, הכנת חומרי העשרה, תרגום טקסטים, יצירת רעיונות לפעילויות',
-  difficultyLevel: 'בינוני',
-  hebrewSupport: true,
-  isFree: false,
-  outputType: 'טקסט',
-  pedagogicalContext: ['הקניה', 'תרגול'],
-  communicationFormat: 'צ\'אט אינטראקטיבי',
-  tags: ['כתיבה', 'תכנון שיעורים', 'שאלות', 'תרגום', 'רעיונות'],
-  createdAt: '2024-01-15',
-  createdBy: { name: 'דר\' שרה כהן', email: 'sarah@example.com' }
-};
+interface Tool {
+  _id: string;
+  name: string;
+  link?: string;
+  logo?: string;
+  description: string;
+  limitations?: string;
+  advantages?: string;
+  disadvantages?: string;
+  toolRating?: number;
+  usageInTeaching?: string;
+  difficultyLevel: string;
+  hebrewSupport: boolean;
+  isFree: boolean;
+  outputType?: string;
+  pedagogicalContext: string[];
+  communicationFormat?: string;
+  tags: string[];
+  createdAt: string;
+  createdBy: {
+    name?: string;
+    email?: string;
+  };
+}
 
+// Mock data for tutorials and examples (will be replaced later)
 const mockTutorials = [
   {
     _id: '1',
-    title: 'מדריך למתחילים - ChatGPT בחינוך',
+    title: 'מדריך למתחילים - שימוש בכלי',
     format: 'וידאו',
     link: 'https://youtube.com/watch?v=example',
     credit: 'משרד החינוך',
     rating: 4.8,
     additionalInfo: 'מדריך מקיף בן 30 דקות'
-  },
-  {
-    _id: '2',
-    title: 'פרומפטים יעילים לכתיבת שאלות',
-    format: 'PDF',
-    link: 'https://example.com/prompts.pdf',
-    credit: 'ד"ר מיכל לוי',
-    rating: 4.6,
-    additionalInfo: 'אוסף של 50 פרומפטים מוכנים'
   }
 ];
 
 const mockExamples = [
   {
     _id: '1',
-    title: 'יצירת תכנית שיעור בביולוגיה',
-    description: 'דוגמה ליצירת תכנית שיעור מפורטת על נושא הפוטוסינתזה',
-    prompt: 'צור תכנית שיעור בת 45 דקות על נושא הפוטוסינתזה לכיתה ט. כלול מטרות, פעילויות ודרכי הערכה.',
-    credit: 'מורה ביולוגיה - תיכון הרצל',
-    rating: 4.7,
-    productLink: 'https://example.com/lesson-plan'
-  },
-  {
-    _id: '2',
-    title: 'שאלות לבחינה במתמטיקה',
-    description: 'יצירת שאלות מגוונות לבחינה בנושא משוואות ריבועיות',
-    prompt: 'כתב 10 שאלות מגוונות (קלות, בינוניות וקשות) על משוואות ריבועיות לכיתה י. כלול פתרונות מפורטים.',
-    credit: 'מורה מתמטיקה - תיכון אלון',
-    rating: 4.5
+    title: 'דוגמה לשימוש בכלי',
+    description: 'דוגמה מעשית לשימוש בכלי בהוראה',
+    prompt: 'דוגמה לפרומפט או הוראות שימוש',
+    credit: 'מורה מנוסה',
+    rating: 4.7
   }
 ];
 
 export default function ToolDetailPage() {
+  const params = useParams();
+  const [tool, setTool] = useState<Tool | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState('overview');
-  const tool = mockTool;
-  const tutorials = mockTutorials;
-  const examples = mockExamples;
+
+  useEffect(() => {
+    const fetchTool = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch(`/api/tools/${params.id}`);
+        
+        if (!response.ok) {
+          throw new Error('Failed to fetch tool');
+        }
+        
+        const data = await response.json();
+        setTool(data);
+      } catch (err) {
+        setError('שגיאה בטעינת פרטי הכלי');
+        console.error('Error fetching tool:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (params.id) {
+      fetchTool();
+    }
+  }, [params.id]);
+
+  if (loading) {
+    return (
+      <div className="py-6 max-w-6xl mx-auto">
+        <div className="flex items-center justify-center min-h-[400px]">
+          <div className="text-center">
+            <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4" />
+            <p>טוען פרטי כלי...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error || !tool) {
+    return (
+      <div className="py-6 max-w-6xl mx-auto">
+        <div className="text-center py-12">
+          <h3 className="text-xl font-semibold mb-2">שגיאה בטעינת הכלי</h3>
+          <p className="text-gray-600 dark:text-gray-400 mb-4">
+            {error || 'הכלי לא נמצא'}
+          </p>
+          <Button asChild>
+            <Link href="/tools">חזרה לכלים</Link>
+          </Button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="py-6 max-w-6xl mx-auto">
@@ -103,14 +145,16 @@ export default function ToolDetailPage() {
         
         <div className="flex items-start justify-between">
           <div className="flex items-center gap-4">
-            <span className="text-4xl">{tool.logo}</span>
+            <span className="text-4xl">{tool.logo || '🤖'}</span>
             <div>
               <h1 className="text-3xl font-bold mb-2">{tool.name}</h1>
               <div className="flex items-center gap-4 mb-2">
-                <div className="flex items-center gap-1">
-                  <Star className="h-5 w-5 fill-yellow-400 text-yellow-400" />
-                  <span className="font-medium">{tool.toolRating}</span>
-                </div>
+                {tool.toolRating && (
+                  <div className="flex items-center gap-1">
+                    <Star className="h-5 w-5 fill-yellow-400 text-yellow-400" />
+                    <span className="font-medium">{tool.toolRating}</span>
+                  </div>
+                )}
                 <Badge variant="outline">{tool.difficultyLevel}</Badge>
                 {tool.hebrewSupport && <Badge variant="secondary">עברית</Badge>}
                 {tool.isFree && <Badge variant="secondary">חינמי</Badge>}
@@ -118,20 +162,26 @@ export default function ToolDetailPage() {
               <div className="flex items-center gap-2 text-sm text-gray-600">
                 <Calendar className="h-4 w-4" />
                 <span>נוצר ב-{new Date(tool.createdAt).toLocaleDateString('he-IL')}</span>
-                <span>•</span>
-                <Users className="h-4 w-4" />
-                <span>על ידי {tool.createdBy.name}</span>
+                {tool.createdBy?.name && (
+                  <>
+                    <span>•</span>
+                    <Users className="h-4 w-4" />
+                    <span>על ידי {tool.createdBy.name}</span>
+                  </>
+                )}
               </div>
             </div>
           </div>
           
           <div className="flex gap-2">
-            <Button asChild>
-              <a href={tool.link} target="_blank" rel="noopener noreferrer">
-                <ExternalLink className="h-4 w-4 mr-2" />
-                פתח כלי
-              </a>
-            </Button>
+            {tool.link && (
+              <Button asChild>
+                <a href={tool.link} target="_blank" rel="noopener noreferrer">
+                  <ExternalLink className="h-4 w-4 mr-2" />
+                  פתח כלי
+                </a>
+              </Button>
+            )}
             <Button variant="outline">
               <Heart className="h-4 w-4" />
             </Button>
@@ -143,8 +193,8 @@ export default function ToolDetailPage() {
       <Tabs value={activeTab} onValueChange={setActiveTab}>
         <TabsList className="grid w-full grid-cols-4">
           <TabsTrigger value="overview">סקירה</TabsTrigger>
-          <TabsTrigger value="tutorials">הדרכות ({tutorials.length})</TabsTrigger>
-          <TabsTrigger value="examples">דוגמאות ({examples.length})</TabsTrigger>
+          <TabsTrigger value="tutorials">הדרכות ({mockTutorials.length})</TabsTrigger>
+          <TabsTrigger value="examples">דוגמאות ({mockExamples.length})</TabsTrigger>
           <TabsTrigger value="reviews">ביקורות</TabsTrigger>
         </TabsList>
 
@@ -165,53 +215,63 @@ export default function ToolDetailPage() {
               </Card>
 
               {/* Usage in Teaching */}
-              <Card>
-                <CardHeader>
-                  <CardTitle>שימוש בהוראה</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-                    {tool.usageInTeaching}
-                  </p>
-                </CardContent>
-              </Card>
+              {tool.usageInTeaching && (
+                <Card>
+                  <CardHeader>
+                    <CardTitle>שימוש בהוראה</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+                      {tool.usageInTeaching}
+                    </p>
+                  </CardContent>
+                </Card>
+              )}
 
               {/* Pros and Cons */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="text-green-600">יתרונות</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-gray-700 dark:text-gray-300">
-                      {tool.advantages}
-                    </p>
-                  </CardContent>
-                </Card>
+              {(tool.advantages || tool.disadvantages) && (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {tool.advantages && (
+                    <Card>
+                      <CardHeader>
+                        <CardTitle className="text-green-600">יתרונות</CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <p className="text-gray-700 dark:text-gray-300">
+                          {tool.advantages}
+                        </p>
+                      </CardContent>
+                    </Card>
+                  )}
 
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="text-red-600">חסרונות</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-gray-700 dark:text-gray-300">
-                      {tool.disadvantages}
-                    </p>
-                  </CardContent>
-                </Card>
-              </div>
+                  {tool.disadvantages && (
+                    <Card>
+                      <CardHeader>
+                        <CardTitle className="text-red-600">חסרונות</CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <p className="text-gray-700 dark:text-gray-300">
+                          {tool.disadvantages}
+                        </p>
+                      </CardContent>
+                    </Card>
+                  )}
+                </div>
+              )}
 
               {/* Limitations */}
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-orange-600">מגבלות</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-gray-700 dark:text-gray-300">
-                    {tool.limitations}
-                  </p>
-                </CardContent>
-              </Card>
+              {tool.limitations && (
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="text-orange-600">מגבלות</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-gray-700 dark:text-gray-300">
+                      {tool.limitations}
+                    </p>
+                  </CardContent>
+                </Card>
+              )}
             </div>
 
             {/* Sidebar */}
@@ -219,46 +279,82 @@ export default function ToolDetailPage() {
               {/* Tool Properties */}
               <Card>
                 <CardHeader>
-                  <CardTitle>מאפיינים</CardTitle>
+                  <CardTitle>מאפייני הכלי</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-3">
                   <div>
-                    <span className="font-medium">סוג תוצר:</span>
-                    <span className="ml-2">{tool.outputType}</span>
+                    <span className="font-medium">רמת קושי:</span>
+                    <Badge variant="outline" className="ml-2">{tool.difficultyLevel}</Badge>
                   </div>
-                  <div>
-                    <span className="font-medium">פורמט תקשורת:</span>
-                    <span className="ml-2">{tool.communicationFormat}</span>
-                  </div>
-                  <div>
-                    <span className="font-medium">הקשר פדגוגי:</span>
-                    <div className="flex gap-1 mt-1">
-                      {tool.pedagogicalContext.map((context) => (
-                        <Badge key={context} variant="default" className="text-xs">
-                          {context}
-                        </Badge>
-                      ))}
+                  
+                  {tool.outputType && (
+                    <div>
+                      <span className="font-medium">סוג תוצר:</span>
+                      <span className="ml-2 text-gray-600">{tool.outputType}</span>
                     </div>
+                  )}
+                  
+                  {tool.communicationFormat && (
+                    <div>
+                      <span className="font-medium">פורמט תקשורת:</span>
+                      <span className="ml-2 text-gray-600">{tool.communicationFormat}</span>
+                    </div>
+                  )}
+                  
+                  <div>
+                    <span className="font-medium">תמיכה בעברית:</span>
+                    <Badge variant={tool.hebrewSupport ? "secondary" : "outline"} className="ml-2">
+                      {tool.hebrewSupport ? "כן" : "לא"}
+                    </Badge>
+                  </div>
+                  
+                  <div>
+                    <span className="font-medium">חינמי:</span>
+                    <Badge variant={tool.isFree ? "secondary" : "outline"} className="ml-2">
+                      {tool.isFree ? "כן" : "לא"}
+                    </Badge>
                   </div>
                 </CardContent>
               </Card>
 
+              {/* Pedagogical Context */}
+              {tool.pedagogicalContext.length > 0 && (
+                <Card>
+                  <CardHeader>
+                    <CardTitle>הקשר פדגוגי</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="flex flex-wrap gap-2">
+                      {tool.pedagogicalContext.map((context) => (
+                        <Badge key={context} variant="default">
+                          {context}
+                        </Badge>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
+
               {/* Tags */}
-              <Card>
-                <CardHeader>
-                  <CardTitle>תגיות</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="flex flex-wrap gap-2">
-                    {tool.tags.map((tag) => (
-                      <Badge key={tag} variant="outline" className="text-xs">
-                        <Tag className="h-3 w-3 mr-1" />
-                        {tag}
-                      </Badge>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
+              {tool.tags.length > 0 && (
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <Tag className="h-4 w-4" />
+                      תגיות
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="flex flex-wrap gap-2">
+                      {tool.tags.map((tag) => (
+                        <Badge key={tag} variant="outline">
+                          {tag}
+                        </Badge>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
             </div>
           </div>
         </TabsContent>
@@ -274,29 +370,32 @@ export default function ToolDetailPage() {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {tutorials.map((tutorial) => (
+            {mockTutorials.map((tutorial) => (
               <Card key={tutorial._id}>
                 <CardHeader>
-                  <div className="flex items-start justify-between">
-                    <div>
-                      <CardTitle className="text-lg">{tutorial.title}</CardTitle>
-                      <CardDescription>על ידי {tutorial.credit}</CardDescription>
-                    </div>
-                    <Badge variant="outline">{tutorial.format}</Badge>
-                  </div>
+                  <CardTitle className="flex items-center gap-2">
+                    <BookOpen className="h-5 w-5" />
+                    {tutorial.title}
+                  </CardTitle>
+                  <CardDescription>
+                    {tutorial.format} • {tutorial.credit}
+                  </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <div className="flex items-center gap-2 mb-3">
-                    <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                    <span className="font-medium">{tutorial.rating}</span>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-1">
+                      <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                      <span className="text-sm">{tutorial.rating}</span>
+                    </div>
+                    <Button size="sm" asChild>
+                      <a href={tutorial.link} target="_blank" rel="noopener noreferrer">
+                        צפה
+                      </a>
+                    </Button>
                   </div>
-                  <p className="text-sm text-gray-600 mb-4">{tutorial.additionalInfo}</p>
-                  <Button asChild size="sm" className="w-full">
-                    <a href={tutorial.link} target="_blank" rel="noopener noreferrer">
-                      <BookOpen className="h-4 w-4 mr-2" />
-                      צפה בהדרכה
-                    </a>
-                  </Button>
+                  {tutorial.additionalInfo && (
+                    <p className="text-sm text-gray-600 mt-2">{tutorial.additionalInfo}</p>
+                  )}
                 </CardContent>
               </Card>
             ))}
@@ -306,7 +405,7 @@ export default function ToolDetailPage() {
         {/* Examples Tab */}
         <TabsContent value="examples" className="space-y-6">
           <div className="flex justify-between items-center">
-            <h2 className="text-2xl font-bold">דוגמאות ופרומפטים</h2>
+            <h2 className="text-2xl font-bold">דוגמאות</h2>
             <Button>
               <Plus className="h-4 w-4 mr-2" />
               הוסף דוגמה
@@ -314,44 +413,27 @@ export default function ToolDetailPage() {
           </div>
           
           <div className="space-y-6">
-            {examples.map((example) => (
+            {mockExamples.map((example) => (
               <Card key={example._id}>
                 <CardHeader>
-                  <div className="flex items-start justify-between">
-                    <div>
-                      <CardTitle className="text-lg">{example.title}</CardTitle>
-                      <CardDescription>על ידי {example.credit}</CardDescription>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                      <span className="font-medium">{example.rating}</span>
-                    </div>
-                  </div>
+                  <CardTitle>{example.title}</CardTitle>
+                  <CardDescription>{example.description}</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-gray-700 dark:text-gray-300 mb-4">
-                    {example.description}
-                  </p>
-                  
                   <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg mb-4">
-                    <h4 className="font-medium mb-2">הפרומפט:</h4>
-                    <p className="text-sm font-mono text-gray-600 dark:text-gray-400">
+                    <h4 className="font-medium mb-2">פרומפט/הוראות:</h4>
+                    <p className="text-sm text-gray-700 dark:text-gray-300">
                       {example.prompt}
                     </p>
                   </div>
-                  
-                  <div className="flex gap-2">
-                    {example.productLink && (
-                      <Button asChild size="sm" variant="outline">
-                        <a href={example.productLink} target="_blank" rel="noopener noreferrer">
-                          <ExternalLink className="h-4 w-4 mr-2" />
-                          צפה בתוצר
-                        </a>
-                      </Button>
-                    )}
-                    <Button size="sm" variant="outline">
-                      העתק פרומפט
-                    </Button>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-4">
+                      <div className="flex items-center gap-1">
+                        <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                        <span className="text-sm">{example.rating}</span>
+                      </div>
+                      <span className="text-sm text-gray-600">{example.credit}</span>
+                    </div>
                   </div>
                 </CardContent>
               </Card>
@@ -361,16 +443,11 @@ export default function ToolDetailPage() {
 
         {/* Reviews Tab */}
         <TabsContent value="reviews" className="space-y-6">
-          <div className="flex justify-between items-center">
-            <h2 className="text-2xl font-bold">ביקורות ודירוגים</h2>
-            <Button>
-              <Plus className="h-4 w-4 mr-2" />
-              הוסף ביקורת
-            </Button>
-          </div>
-          
           <div className="text-center py-12">
-            <p className="text-gray-500">ביקורות יתווספו בהמשך...</p>
+            <h3 className="text-xl font-semibold mb-2">ביקורות</h3>
+            <p className="text-gray-600 dark:text-gray-400 mb-4">
+              תכונה זו תתווסף בקרוב
+            </p>
           </div>
         </TabsContent>
       </Tabs>

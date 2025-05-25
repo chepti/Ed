@@ -21,7 +21,7 @@ export function Footer() {
               <p className="outfit outfit-medium">
                 Built by{' '}
                 <a 
-                  href="https://linktr.ee/yuvai" 
+                  href="https://linktr.ee/chepti" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="underline hover:text-yuvai-purple transition-colors outfit-semibold"
@@ -34,15 +34,15 @@ export function Footer() {
                 Fly High With YUV.AI
               </p>
               <div className="flex space-x-3 mt-2 justify-center md:justify-start">
-                <SocialLink href="https://linktr.ee/yuvai" label="Linktree" />
-                <SocialLink href="https://twitter.com/yuvai" label="Twitter" />
-                <SocialLink href="https://instagram.com/yuv.ai" label="Instagram" />
-                <SocialLink href="https://yuv.ai/blog" label="Blog" />
+                <SocialLink href="https://linktr.ee/chepti" label="Linktree" />
+                <SocialLink href="https://twitter.com/chepti" label="Twitter" />
+                <SocialLink href="https://instagram.com/chepti" label="Instagram" />
+                <SocialLink href="https://chepti/blog" label="Blog" />
               </div>
             </div>
           </div>
           <Link 
-            href="https://yuv.ai" 
+            href="https://chepti" 
             target="_blank" 
             rel="noopener noreferrer"
             className="block w-24 mt-4 animate-phoenix-fly"

@@ -87,13 +87,26 @@ export default function NewToolPage() {
     setIsSubmitting(true);
 
     try {
-      // כאן נוסיף את הקריאה ל-API להוספת הכלי
-      console.log('Submitting tool:', formData);
+      const response = await fetch('/api/tools', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to create tool');
+      }
+
+      const newTool = await response.json();
+      console.log('Tool created successfully:', newTool);
       
-      // זמנית - נחזור לדף הכלים
+      // חזרה לדף הכלים לאחר יצירה מוצלחת
       router.push('/tools');
     } catch (error) {
       console.error('Error submitting tool:', error);
+      alert('שגיאה ביצירת הכלי. אנא נסו שוב.');
     } finally {
       setIsSubmitting(false);
     }

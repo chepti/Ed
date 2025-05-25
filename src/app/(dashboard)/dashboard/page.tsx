@@ -1,18 +1,84 @@
+'use client';
+
+import { useState } from 'react';
 import { currentUser } from '@clerk/nextjs/server';
 import { redirect } from 'next/navigation';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { ChevronsUp, Mail, Search, BookOpen, Star, Brain, Users, Sparkles } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { ChevronsUp, Mail, Search, BookOpen, Star, Brain, Users, Sparkles, Database, Loader2 } from 'lucide-react';
+import { useUser } from '@clerk/nextjs';
 
-export default async function DashboardPage() {
-  const user = await currentUser();
-  
+export default function DashboardPage() {
+  const { user } = useUser();
+  const [isSeeding, setIsSeeding] = useState(false);
+  const [seedResult, setSeedResult] = useState<string | null>(null);
+
+  const handleSeedDatabase = async () => {
+    setIsSeeding(true);
+    setSeedResult(null);
+    
+    try {
+      const response = await fetch('/api/seed');
+      const data = await response.json();
+      
+      if (response.ok) {
+        setSeedResult(data.message);
+      } else {
+        setSeedResult(`שגיאה: ${data.error}`);
+      }
+    } catch (error) {
+      setSeedResult('שגיאה בחיבור לשרת');
+    } finally {
+      setIsSeeding(false);
+    }
+  };
+
   if (!user) {
-    redirect('/sign-in');
+    return <div>טוען...</div>;
   }
 
   return (
     <div className="py-10 animate-fadeIn glass-blur-gradient">
+      {/* Database Seed Section */}
+      <Card className="mb-8 border-blue-200 bg-blue-50 dark:border-blue-900 dark:bg-blue-950/50">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Database className="h-5 w-5 text-blue-600" />
+            אתחול מסד הנתונים
+          </CardTitle>
+          <CardDescription>
+            אם זו הפעם הראשונה שלכם כאן, לחצו כדי לאתחל את מסד הנתונים עם כלים ראשוניים
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="flex gap-4 items-center">
+            <Button 
+              onClick={handleSeedDatabase} 
+              disabled={isSeeding}
+              variant="outline"
+            >
+              {isSeeding ? (
+                <>
+                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                  מאתחל...
+                </>
+              ) : (
+                <>
+                  <Database className="h-4 w-4 mr-2" />
+                  אתחל מסד נתונים
+                </>
+              )}
+            </Button>
+            {seedResult && (
+              <div className={`text-sm ${seedResult.includes('שגיאה') ? 'text-red-600' : 'text-green-600'}`}>
+                {seedResult}
+              </div>
+            )}
+          </div>
+        </CardContent>
+      </Card>
+
       {/* Dashboard Banner */}
       <div className="animated-banner mb-8 rounded-md shadow-lg overflow-hidden">
         <div className="px-4 py-5 sm:px-6 flex items-center justify-between">
