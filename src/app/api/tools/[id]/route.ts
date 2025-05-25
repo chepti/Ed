@@ -4,12 +4,14 @@ import Tool from '@/models/Tool';
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     await connectToDatabase();
     
-    const tool = await Tool.findById(params.id)
+    const { id } = await params;
+    
+    const tool = await Tool.findById(id)
       .populate('createdBy', 'name email');
     
     if (!tool) {
