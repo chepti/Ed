@@ -102,9 +102,28 @@ const seedTools = [
 
 export async function GET() {
   try {
-    // בדיקה אם יש כבר כלים במסד הנתונים
+    console.log('🔄 מתחיל אתחול מסד הנתונים...');
+    
+    // בדיקת משתני סביבה
+    if (!process.env.MONGODB_URI) {
+      console.error('❌ MONGODB_URI לא מוגדר');
+      return NextResponse.json({
+        error: 'משתני הסביבה לא מוגדרים כראוי',
+        details: 'MONGODB_URI חסר'
+      }, { status: 500 });
+    }
+
+    console.log('✅ משתני סביבה נמצאו');
+    
+    // חיבור למסד הנתונים
+    console.log('🔗 מתחבר למסד הנתונים...');
     await connectToDatabase();
+    console.log('✅ חיבור למסד הנתונים הצליח');
+    
+    // בדיקה אם יש כבר כלים במסד הנתונים
+    console.log('🔍 בודק כלים קיימים...');
     const existingTools = await Tool.countDocuments();
+    console.log(`📊 נמצאו ${existingTools} כלים קיימים`);
     
     if (existingTools > 0) {
       return NextResponse.json({
@@ -114,7 +133,9 @@ export async function GET() {
     }
 
     // אתחול מסד הנתונים
+    console.log('📝 מוסיף כלים חדשים...');
     const tools = await Tool.insertMany(seedTools);
+    console.log(`✅ נוספו ${tools.length} כלים בהצלחה`);
     
     return NextResponse.json({
       message: `מסד הנתונים אותחל בהצלחה! נוספו ${tools.length} כלים.`,
@@ -125,13 +146,19 @@ export async function GET() {
       }))
     });
   } catch (error) {
-    console.error('שגיאה באתחול מסד הנתונים:', error);
-    return NextResponse.json(
-      { 
-        error: 'שגיאה באתחול מסד הנתונים',
-        details: error instanceof Error ? error.message : 'Unknown error'
-      },
-      { status: 500 }
-    );
+    console.error('❌ שגיאה באתחול מסד הנתונים:', error);
+    
+    // פירוט השגיאה
+    let errorDetails = 'שגיאה לא ידועה';
+    if (error instanceof Error) {
+      errorDetails = error.message;
+      console.error('📋 פרטי השגיאה:', error.stack);
+    }
+    
+    return NextResponse.json({
+      error: 'שגיאה באתחול מסד הנתונים',
+      details: errorDetails,
+      timestamp: new Date().toISOString()
+    }, { status: 500 });
   }
 } 
