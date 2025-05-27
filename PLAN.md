@@ -90,13 +90,3 @@ The goal is to create a comprehensive Next.js boilerplate with MongoDB, Clerk au
 4. **Tailwind + shadcn/ui**: For rapid UI development with consistent design
 5. **Mobile-First Approach**: Ensuring responsive design across all devices
 
-## Contact
-
-For questions or suggestions, please contact:
-
-Yuval Avidani  
-[https://linktr.ee/yuvai](https://linktr.ee/yuvai)
-
----
-
-*Last updated: May 26, 2023* | Fly High With YUV.AI 

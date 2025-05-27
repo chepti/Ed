@@ -201,6 +201,7 @@ NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/dashboard
 - אינטגרציה מלאה עם Clerk לאימות
 - MongoDB מוכן לשימוש עם נתונים אמיתיים ✅
 - shadcn/ui components מותאמים
+- דחף שינויים לGIT 
 
 ## איך להתחיל עם מסד הנתונים
 1. וודא שמשתני הסביבה מוגדרים ב-.env.local

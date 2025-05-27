@@ -53,11 +53,11 @@ export async function connectToDatabase() {
 
   if (!cached.promise) {
     console.log('🔗 יוצר חיבור חדש ל-MongoDB...');
-    const opts = {
-      bufferCommands: false,
-    };
+    // const opts = {
+    //   bufferCommands: false,
+    // };
 
-    cached.promise = mongoose.connect(MONGODB_URI!, opts).then((mongoose) => {
+    cached.promise = mongoose.connect(MONGODB_URI!) /* , opts */ .then((mongoose) => {
       console.log('✅ חיבור ל-MongoDB הצליח!');
       return mongoose;
     });
