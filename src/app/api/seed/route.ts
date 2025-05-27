@@ -1,4 +1,15 @@
 import { NextResponse } from 'next/server';
+
+// בדיקה מוקדמת של משתנה הסביבה MONGODB_URI
+// זה חשוב כדי לראות בלוגים של Vercel אם המשתנה הזה בכלל מגיע.
+console.log('⚪️ [api/seed] התחלה - בדיקת MONGODB_URI בראש הפונקציה');
+if (process.env.MONGODB_URI) {
+  console.log('🟢 [api/seed] MONGODB_URI קיים ב-process.env. תוכן חלקי:', process.env.MONGODB_URI.substring(0, 50) + '...');
+} else {
+  console.error('🔴 [api/seed] קריטי: MONGODB_URI ***אינו קיים*** ב-process.env בבדיקה מוקדמת!');
+}
+// סוף בדיקה מוקדמת
+
 import { connectToDatabase } from '@/lib/mongodb';
 import Tool from '@/models/Tool';
 
@@ -101,24 +112,25 @@ const seedTools = [
 ];
 
 export async function GET() {
-  try {
-    console.log('🔄 מתחיל אתחול מסד הנתונים...');
-    
-    // בדיקת משתני סביבה
-    if (!process.env.MONGODB_URI) {
-      console.error('❌ MONGODB_URI לא מוגדר');
-      return NextResponse.json({
-        error: 'משתני הסביבה לא מוגדרים כראוי',
-        details: 'MONGODB_URI חסר'
-      }, { status: 500 });
-    }
+  // בדיקה מוקדמת שהועברה לסקופ הגלובלי של המודול
+  console.log('🔄 [api/seed GET] מתחיל אתחול מסד הנתונים...');
+  
+  // בדיקת משתני סביבה - הלוג הזה כבר קיים למעלה, אבל נשאיר למקרה שהלוג העליון לא נרשם
+  if (!process.env.MONGODB_URI) {
+    console.error('❌ [api/seed GET] MONGODB_URI לא מוגדר בשלב זה של הפונקציה');
+    return NextResponse.json({
+      error: 'משתני הסביבה לא מוגדרים כראוי (בדיקה בתוך GET)',
+      details: 'MONGODB_URI חסר'
+    }, { status: 500 });
+  }
 
-    console.log('✅ משתני סביבה נמצאו');
-    
+  console.log('✅ [api/seed GET] משתני סביבה נמצאו (בדיקה בתוך GET)');
+  
+  try {
     // חיבור למסד הנתונים
-    console.log('🔗 מתחבר למסד הנתונים...');
+    console.log('🔗 [api/seed GET] מתחבר למסד הנתונים...');
     await connectToDatabase();
-    console.log('✅ חיבור למסד הנתונים הצליח');
+    console.log('✅ [api/seed GET] חיבור למסד הנתונים הצליח');
     
     // בדיקה אם יש כבר כלים במסד הנתונים
     console.log('🔍 בודק כלים קיימים...');
