@@ -16,7 +16,7 @@ export async function GET() {
     console.error('🔴 [api/seed GET] שגיאה בפונקציה הפשוטה (לא אמור לקרות):', error);
     return NextResponse.json({
       error: 'שגיאה בלתי צפויה בבדיקה הפשוטה',
-      // @ts-ignore
+      // @ts-expect-error
       details: error?.message || 'לא ידוע'
     }, { status: 500 });
   }
